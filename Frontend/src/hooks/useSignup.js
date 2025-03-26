@@ -13,7 +13,7 @@ const useSignup = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/signup", {
+      const res = await fetch("https://dsa-tut.onrender.com/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, confirmPassword }),

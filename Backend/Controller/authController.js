@@ -90,7 +90,7 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     
-    const resetLink = `http://localhost:5173/resetpassword/${resetToken}`;
+    const resetLink = `https://dsa-tut.vercel.app/resetpassword/${resetToken}`;
     await sendEmail(email, 'Password Reset', `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 5 minutes.</p>`);
 
     res.status(200).json({ message: 'Reset link sent to email' });
