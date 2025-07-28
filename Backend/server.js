@@ -26,10 +26,7 @@ if (!mongoURI) {
     process.exit(1); // Stop the server if the URI is missing
   }
   
-  mongoose.connect(mongoURI, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-  }).then(() => {
+  mongoose.connect(mongoURI).then(() => {
     console.log("Connected to MongoDB successfully");
   }).catch(err => {
     console.error("MongoDB connection error:", err);

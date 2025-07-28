@@ -9,13 +9,16 @@ dotenv.config();
 
 export const signupf = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
     if (username.length < 8) {
       return res.status(400).json({ message: 'Username must be at least 8 characters long.' });
     }
     if (password.length < 8) {
       return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+    }
+    if(confirmPassword!==password){
+      return res.status(400).json({message: 'Passwords do not match'})
     }
 
     const existingUser = await User.findOne({ email });
@@ -86,11 +89,11 @@ export const forgotPassword = async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
     await user.save();
 
     
-    const resetLink = `https://dsa-tut.vercel.app/resetpassword/${resetToken}`;
+    const resetLink = `http://localhost:5173/resetpassword/${resetToken}`;
     await sendEmail(email, 'Password Reset', `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 5 minutes.</p>`);
 
     res.status(200).json({ message: 'Reset link sent to email' });
